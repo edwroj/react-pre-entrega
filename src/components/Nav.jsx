@@ -1,6 +1,6 @@
 import React from "react";
 
-function Nav({ cartCount, onCartClick }) {
+function Nav({ cartCount, onCartClick, onContactClick }) {
   return (
     <nav style={{ backgroundColor: "#333", color: "white", padding: "10px" }}>
       <ul
@@ -24,7 +24,8 @@ function Nav({ cartCount, onCartClick }) {
           </a>
         </li>
         <li>
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
+          <a href="#" style={{ color: "white", textDecoration: "none" }}
+            onClick={onContactClick}>
             Contacto
           </a>
         </li>
