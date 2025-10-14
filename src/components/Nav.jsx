@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom"; // 👈 Importamos Link para navegación interna
 
-function Nav({ cartCount, onCartClick, onContactClick }) {
+function Nav({ cartCount, onCartClick }) {
   return (
     <nav style={{ backgroundColor: "#333", color: "white", padding: "10px" }}>
       <ul
@@ -13,21 +14,34 @@ function Nav({ cartCount, onCartClick, onContactClick }) {
           alignItems: "center",
         }}
       >
+        {/* 🏠 Inicio */}
         <li>
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
+          <Link
+            to="/"
+            style={{ color: "white", textDecoration: "none" }}
+          >
             Inicio
-          </a>
+          </Link>
         </li>
+
+        {/* ℹ️ Acerca de (por ahora puede ser un link vacío o futura ruta) */}
         <li>
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
+          <Link
+            to="#"
+            style={{ color: "white", textDecoration: "none" }}
+          >
             Acerca de
-          </a>
+          </Link>
         </li>
+
+        {/* 📞 Contacto */}
         <li>
-          <a href="#" style={{ color: "white", textDecoration: "none" }}
-            onClick={onContactClick}>
+          <Link
+            to="/contacto"
+            style={{ color: "white", textDecoration: "none" }}
+          >
             Contacto
-          </a>
+          </Link>
         </li>
 
         {/* 🛒 Icono del carrito */}
@@ -67,3 +81,4 @@ function Nav({ cartCount, onCartClick, onContactClick }) {
 }
 
 export default Nav;
+
