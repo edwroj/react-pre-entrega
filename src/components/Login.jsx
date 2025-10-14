@@ -7,7 +7,7 @@ function Login({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simulación de login correcto (luego puedes validar con backend)
+    // simulacion login
     if (email === "admin@example.com" && password === "123456") {
       onLogin(); // Llama al callback para iniciar sesión
     } else {

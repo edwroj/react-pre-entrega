@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"; // 👈 Importamos Link para navegación interna
+import { Link } from "react-router-dom"; 
 
 function Nav({ cartCount, onCartClick }) {
   return (
