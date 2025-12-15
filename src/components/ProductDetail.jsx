@@ -1,24 +1,26 @@
 import React from "react";
 
-function ProductDetail({ product, onClose, onAddToCart }) {
+function ProductDetail({ product, onClose, onAddToCart, onEditProduct, isLoggedIn, user}) {
   if (!product) return null;
 
   return (
     <div className="modaloverlay">
       <div className="modalcontent">
+
         <button className="btncarrito" onClick={onClose}>
           ✖
         </button>
 
-        <h2>{product.title}</h2>
+        <h2>{product.nombre}</h2>
         <img
-          src={product.image}
-          alt={product.title}
+          src={product.imagen}
+          alt={product.nombre}
           style={{ width: "150px", height: "150px", objectFit: "contain" }}
         />
-        <p>{product.description}</p>
-        <h3>${product.price}</h3>
+        <p>{product.descripcion}</p>
+        <h3>${product.precio}</h3>
 
+        {/* BOTÓN AGREGAR AL CARRITO */}
         <button
           onClick={() => {
             onAddToCart(product);
@@ -36,6 +38,10 @@ function ProductDetail({ product, onClose, onAddToCart }) {
         >
           🛒 Agregar al carrito
         </button>
+
+        
+        
+
       </div>
     </div>
   );

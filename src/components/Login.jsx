@@ -1,87 +1,72 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Login({ onLogin }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function Login({ show, user, setUser, onLogin, onClose, error }) {
+  if (!show) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // simulacion login
-    if (email === "admin@example.com" && password === "123456") {
-      onLogin(); // Llama al callback para iniciar sesión
-    } else {
-      alert("Credenciales incorrectas");
-    }
+    onLogin(e);
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        background: "#f2f2f2",
-      }}
-    >
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          background: "white",
-          padding: "30px",
-          borderRadius: "10px",
-          boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-          width: "300px",
-          textAlign: "center",
-        }}
-      >
-        <h2>Iniciar Sesión</h2>
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{
-            width: "100%",
-            padding: "10px",
-            margin: "10px 0",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{
-            width: "100%",
-            padding: "10px",
-            margin: "10px 0",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
-        />
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "#333",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Ingresar
-        </button>
-      </form>
+    <div className="modaloverlay">
+      <div className="modalcontent">
+
+        {/* Header */}
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h5 className="m-0">Iniciar sesión</h5>
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={onClose}
+          ></button>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          {/* Usuario */}
+          <div className="mb-3">
+            <label className="form-label">Usuario</label>
+            <input
+              type="text"
+              className="form-control"
+              value={user.username}
+              onChange={(e) =>
+                setUser({ ...user, username: e.target.value })
+              }
+              required
+            />
+          </div>
+
+          {/* Contraseña */}
+          <div className="mb-3">
+            <label className="form-label">Contraseña</label>
+            <input
+              type="password"
+              className="form-control"
+              value={user.password}
+              onChange={(e) =>
+                setUser({ ...user, password: e.target.value })
+              }
+              required
+            />
+          </div>
+
+          {error && (
+            <div className="alert alert-danger py-2">{error}</div>
+          )}
+
+          <div className="d-flex justify-content-end">
+            <button type="submit" className="btn btn-secondary">
+              Ingresar
+            </button>
+          </div>
+        </form>
+
+      </div>
     </div>
   );
 }
 
 export default Login;
+

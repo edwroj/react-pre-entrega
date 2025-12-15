@@ -1,84 +1,120 @@
-import React from "react";
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 
-function Nav({ cartCount, onCartClick }) {
+function Nav({
+  cartCount,
+  onCartClick,
+  isLoggedIn,
+  user,
+  onLogout,
+  onLoginClick
+}) {
+  const navigate = useNavigate();
+
+  const handleAdminClick = () => {
+    if (!isLoggedIn) {
+      onLoginClick();
+      return;
+    }
+
+    if (user.username !== "admin") {
+      alert("Solo el administrador puede agregar productos");
+      return;
+    }
+
+    navigate("/admin/nuevo-producto");
+  };
+
   return (
-    <nav style={{ backgroundColor: "#333", color: "white", padding: "10px" }}>
-      <ul
-        style={{
-          listStyle: "none",
-          display: "flex",
-          justifyContent: "space-around",
-          margin: 0,
-          padding: 0,
-          alignItems: "center",
-        }}
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+      <Link className="navbar-brand" to="/">
+        MiTienda
+      </Link>
+
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
       >
-        {/* 🏠 Inicio */}
-        <li>
-          <Link
-            to="/"
-            style={{ color: "white", textDecoration: "none" }}
-          >
-            Inicio
-          </Link>
-        </li>
+        <span className="navbar-toggler-icon" />
+      </button>
 
-        {/* ℹ️ Acerca de (por ahora puede ser un link vacío o futura ruta) */}
-        <li>
-          <Link
-            to="#"
-            style={{ color: "white", textDecoration: "none" }}
-          >
-            Acerca de
-          </Link>
-        </li>
+      <div className="collapse navbar-collapse" id="navbarNav">
+        {/* Izquierda */}
+        <ul className="navbar-nav me-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to="/">
+              Inicio
+            </Link>
+          </li>
 
-        {/* 📞 Contacto */}
-        <li>
-          <Link
-            to="/contacto"
-            style={{ color: "white", textDecoration: "none" }}
-          >
-            Contacto
-          </Link>
-        </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/contacto">
+              Contacto
+            </Link>
+          </li>
 
-        {/* 🛒 Icono del carrito */}
-        <li
-          onClick={onCartClick}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            cursor: "pointer",
-            position: "relative",
-          }}
-          title="Ver carrito"
-        >
-          🛒
-          {cartCount > 0 && (
-            <span
-              style={{
-                position: "absolute",
-                top: "-5px",
-                right: "-10px",
-                background: "red",
-                borderRadius: "50%",
-                padding: "2px 6px",
-                fontSize: "0.8rem",
-                fontWeight: "bold",
-                color: "white",
-              }}
-            >
-              {cartCount}
-            </span>
+          {isLoggedIn && user.username === "admin" && (
+            <li className="nav-item">
+              <button
+                className="nav-link btn btn-link text-white"
+                onClick={handleAdminClick}
+              >
+                Agregar Producto
+              </button>
+            </li>
           )}
-        </li>
-      </ul>
+        </ul>
+
+        {/* Derecha */}
+        <ul className="navbar-nav align-items-center gap-2">
+          <li className="nav-item">
+            <button
+              className="btn btn-outline-light position-relative"
+              onClick={onCartClick}
+            >
+              🛒
+              {cartCount > 0 && (
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          </li>
+
+          {!isLoggedIn ? (
+            <li className="nav-item">
+              <button
+                className="btn btn-secondary"
+                onClick={onLoginClick}
+              >
+                Login
+              </button>
+            </li>
+          ) : (
+            <li className="nav-item dropdown">
+              <button
+                className="btn btn-secondary dropdown-toggle"
+                data-bs-toggle="dropdown"
+              >
+                👤 {user.username}
+              </button>
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li>
+                  <button
+                    className="dropdown-item text-danger"
+                    onClick={onLogout}
+                  >
+                    Cerrar sesión
+                  </button>
+                </li>
+              </ul>
+            </li>
+          )}
+        </ul>
+      </div>
     </nav>
   );
 }
 
 export default Nav;
-
